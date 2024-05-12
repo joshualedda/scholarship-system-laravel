@@ -1,0 +1,186 @@
+
+
+
+        <script>
+            // Get the canvas element
+        const ctx = document.getElementById('myChart').getContext('2d');
+
+        // Chart data
+        const data = {
+        labels: ["NLUC", "MLUC", "SLUC", "OUS"],
+        datasets: [{
+            label: 'Data',
+            data: [1, 30, 40, 10],
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(255, 159, 64, 0.2)',
+                'rgba(255, 205, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+            ],
+            borderColor: [
+                'rgb(255, 99, 132)',
+                'rgb(255, 159, 64)',
+                'rgb(255, 205, 86)',
+                'rgb(75, 192, 192)',
+            ],
+            borderWidth: 2,
+        }]
+        };
+
+        // Chart configuration
+        const options = {
+        scales: {
+            responsive:true,
+            x: {
+            beginAtZero: true
+            }
+        }
+        };
+
+        // Create Chart.js bar chart
+        const myChart = new Chart(ctx, {
+        type: 'bar',
+        data: data,
+        options: options
+        });
+        </script>
+
+
+
+    public function gatherData()
+    {
+        $query = Student::query();
+
+        // Join with grantees table using the correct relationship name
+        $query->join('grantees', 'students.id', '=', 'grantees.student_id');
+        // Join with tables for name retrieval
+        $query->join('barangays', 'students.barangay', '=', 'barangays.brgyCode');
+        $query->join('municipals', 'students.municipal', '=', 'municipals.citymunCode');
+        $query->join('provinces', 'students.province', '=', 'provinces.provCode');
+        $query->join('campuses', 'students.campus', '=', 'campuses.id');
+        $query->join('courses', 'students.course', '=', 'courses.course_id');
+        // Join with scholarships table to retrieve scholarship names
+        $query->join('scholarship_name',  'grantees.scholarship_name', '=', 'scholarship_name.id');
+
+
+        // Apply filtering based on selected options
+        if ($this->selectedProvince) {
+            $query->where('students.province', $this->selectedProvince);
+        }
+        if ($this->selectedMunicipality) {
+            $query->where('students.municipal', $this->selectedMunicipality);
+        }
+        if ($this->selectedBarangay) {
+            $query->where('students.barangay', $this->selectedBarangay);
+        }
+
+
+        // Apply filtering based on selected options
+        if ($this->selectedCampus) {
+            $query->where('students.campus', $this->selectedCampus);
+        }
+        if ($this->selectedCourse) {
+            $query->where('students.course', $this->selectedCourse);
+        }
+
+
+        if ($this->semester) {
+            $query->where('grantees.semester', $this->semester);
+        }
+
+        if ($this->selectedYear) {
+            $query->where('grantees.school_year', $this->selectedYear);
+        }
+
+        if ($this->selectedScholarshipType) {
+            $query->where('grantees.scholarship_type', $this->selectedScholarshipType);
+        }
+
+        if ($this->selectedfunsources) {
+            $query->where('grantees.scholarship_name', $this->selectedfunsources);
+        }
+
+        $selectedFields = ['CONCAT(s.lastname, ", ", s.firstname, " ", s.initial AS full_name)'];
+
+        if ($this->selectedProvince) {
+            $selectedFields[] = 'provinces.provDesc as provDesc';
+        }
+
+        if ($this->selectedMunicipality) {
+            $selectedFields[] = 'municipals.citymunDesc as citymunDesc';
+        }
+
+        if ($this->selectedBarangay) {
+            $selectedFields[] = 'barangays.brgyDesc as brgyDesc';
+        }
+
+        if ($this->selectedCampus) {
+            $selectedFields[] = 'campuses.campus_name as campus_name';
+        }
+
+        if ($this->selectedCourse) {
+            $selectedFields[] = 'courses.course_name as course_name';
+        }
+
+        if ($this->semester) {
+            $selectedFields[] = 'grantees.semester';
+        }
+
+        if ($this->selectedYear) {
+            $selectedFields[] = 'grantees.school_year';
+        }
+
+        if ($this->selectedfunsources) {
+            $selectedFields[] = 'scholarship_name.name as scholarship_name';
+        }
+
+        if ($this->selectedScholarshipType) {
+            $selectedFields[] = 'grantees.scholarship_type';
+        }
+
+        $query->select($selectedFields);
+
+        return $query->get();
+
+    }
+
+
+
+
+    // protected $selectedProvince;
+    // protected $selectedMunicipality;
+    // protected $selectedBarangay;
+    // protected $selectedCampus;
+    // protected $selectedCourse;
+    // protected $semester;
+    // protected $selectedYear;
+    // protected $selectedfunsources;
+    // protected $selectedScholarshipType;
+    // $selectedProvince,
+    // $selectedMunicipality,
+    // $selectedBarangay,
+    // $selectedCampus,
+    // $selectedCourse,
+    // $semester,
+    // $selectedYear,
+    // $selectedfunsources,
+    // $selectedScholarshipType
+    // $this->selectedProvince,
+    // $this->selectedMunicipality,
+    // $this->selectedBarangay,
+    // $this->selectedCampus,
+    // $this->selectedCourse,
+    // $this->semester,
+    // $this->selectedYear,
+    // $this->selectedfunsources,
+    // $this->selectedScholarshipType
+
+    // $this->selectedProvince = $selectedProvince;
+        // $this->selectedMunicipality = $selectedMunicipality;
+        // $this->selectedBarangay = $selectedBarangay;
+        // $this->selectedCampus = $selectedCampus;
+        // $this->selectedCourse = $selectedCourse;
+        // $this->semester = $semester;
+        // $this->selectedYear = $selectedYear;
+        // $this->selectedfunsources = $selectedfunsources;
+        // $this->selectedScholarshipType = $selectedScholarshipType;
