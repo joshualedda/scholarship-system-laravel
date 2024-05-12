@@ -1,6 +1,6 @@
 @include('layouts.header')
     <section class="d-flex align-items-center justify-content-center" style="height: 90vh;">
-        <div class="container shadow-lg p-3 mb-5 bg-body rounded">
+        <div class="container shadow-sm p-3 mb-5 bg-body rounded">
             <div class="row d-flex align-items-center justify-content-center h-100">
                 <div class="col-md-8 col-lg-6 col-xl-5">
                     <img src=" {{ asset('assets/images/updated.png') }} " class="img-fluid" alt="dmmmsu-logo">

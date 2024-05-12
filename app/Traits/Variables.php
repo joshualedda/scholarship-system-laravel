@@ -32,9 +32,9 @@ trait Variables
     public $selectedMunicipality;
     public $selectedBarangay;
 
-    public $provinces = [];
-    public $municipalities = [];
-    public $barangays =[];
+        public $provinces = [];
+        public $municipalities = [];
+        public $barangays =[];
 
     // show&hide
     public $showNewInput = false;

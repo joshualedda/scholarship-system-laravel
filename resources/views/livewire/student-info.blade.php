@@ -7,7 +7,7 @@
                         Student Data
                     </div>
                     <div class="card-body">
-                        <form wire:submit.prevent="saveStudent">
+                        <form wire:submit.prevent="saveStudent" class="row g-3">
                             @csrf
                             <div class="row">
                                 <div class="col-md-3 mb-3">
@@ -310,6 +310,8 @@
                                     @enderror
                                 </div>
                             </div>
+                            <hr>
+
                             {{-- family --}}
                             <div class="row mb-4">
                                 <p class="fw-bold fs-5">II. FAMILY INFORMATION</p>

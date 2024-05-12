@@ -4,23 +4,27 @@
     <ul class="sidebar-nav" id="sidebar-nav">
 
         <li class="nav-item">
-            <a class="nav-link " href="{{ url('dashboard') }}">
+            <a class="nav-link @unless(url()->current() === url('dashboard')) collapsed @endunless" href="{{ url('dashboard') }}">
                 <i class="bi bi-grid"></i>
                 <span>Dashboard</span>
             </a>
         </li>
+
+
+
         <!-- End Dashboard Nav -->
 
         <li class="nav-item">
-            <a class="nav-link" href="{{ url('student') }}">
+            <a class="nav-link @unless(url()->current() === url('student')) collapsed @endunless" href="{{ url('student') }}">
                 <i class="bi bi-person-plus"></i>
                 <span>Student</span>
             </a>
         </li>
+
         <!-- End Student Nav -->
 
         <li class="nav-item">
-            <a class="nav-link" href="{{ url('viewGrantee') }}">
+            <a class="nav-link @unless(url()->current() === url('viewGrantee')) collapsed @endunless" href="{{ url('viewGrantee') }}">
                 <i class="bi bi-book"></i>
                 <span>Scholarships</span>
             </a>
@@ -30,18 +34,16 @@
 
         @can('admin-access')
         <li class="nav-item">
-            <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
+            <a class="nav-link @unless(url()->current() === url('scholarView') || url()->current() === url('auditTrail') || url()->current() === url('backUp') || url()->current() === url('programCampus') || url()->current() === url('schoolYear')) show @endunless" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
                 <i class="bi bi-wrench"></i><span>Settings</span><i
                     class="bi bi-chevron-down ms-auto"></i>
             </a>
-            <ul id="tables-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-
+            <ul id="tables-nav" class="nav-content collapse @if(url()->current() === url('scholarView') || url()->current() === url('auditTrail') || url()->current() === url('backUp') || url()->current() === url('programCampus') || url()->current() === url('schoolYear')) show @endif" data-bs-parent="#sidebar-nav">
                 <li>
                     <a href="{{ url('scholarView') }}">
                         <i class="bi bi-circle"></i><span>Add Scholarships</span>
                     </a>
                 </li>
-
                 <li>
                     <a href="{{ url('auditTrail') }}">
                         <i class="bi bi-circle"></i><span>Audit Trail</span>
@@ -65,12 +67,13 @@
             </ul>
         </li>
 
+
         <li class="nav-item">
-            <a class="nav-link collapsed" data-bs-target="#user-nav" data-bs-toggle="collapse" href="#">
+            <a class="nav-link @if(url()->current() === url('userAccount') || url()->current() === route('usertype.list')) show @endif" data-bs-target="#user-nav" data-bs-toggle="collapse" href="#">
                 <i class="bi bi-person-circle"></i><span>User Settings</span><i
                     class="bi bi-chevron-down ms-auto"></i>
             </a>
-            <ul id="user-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+            <ul id="user-nav" class="nav-content collapse @if(url()->current() === url('userAccount') || url()->current() === route('usertype.list')) show @endif" data-bs-parent="#sidebar-nav">
                 <li>
                     <a href="{{ url('userAccount') }}">
                         <i class="bi bi-circle"></i><span>User List</span>
@@ -81,7 +84,6 @@
                         <i class="bi bi-circle"></i><span>User Types</span>
                     </a>
                 </li>
-
             </ul>
         </li>
 
@@ -156,7 +158,7 @@
     @endcan
 
     <li class="nav-item">
-        <a class="nav-link" href="{{ url('studentReports') }}">
+        <a class="nav-link collapsed" href="{{ url('studentReports') }}">
             <i class="bi bi-clipboard-data"></i>
             <span>Reports</span>
         </a>
@@ -166,7 +168,7 @@
     <li class="nav-item">
         <form action="{{ route('logout') }}" method="POST">
             @csrf
-            <button type="submit" class="nav-link">
+            <button type="submit" class="nav-link collapsed">
                 <i class="bi bi-arrow-left-circle"></i>
                 <span>Log out</span>
             </button>

@@ -105,7 +105,7 @@ class StudentInfo extends Component
                         'action' => 'Added a new student',
                         'data' => json_encode('Added by ' . $user->name),
                     ]);
-                    
+
                     $roleName = '';
                     if ($userRole == 0) {
                         $roleName = "Staff";
@@ -114,14 +114,14 @@ class StudentInfo extends Component
                     } else {
                         $roleName = "Campus";
                     }
-                    
+
                     // Save notification
                     Notification::create([
                         'user_id' => $user->id,
                         'action' => 'Added new student',
                         'data' => json_encode($roleName . ' added new student'),
                     ]);
-                    
+
     }
 
 
